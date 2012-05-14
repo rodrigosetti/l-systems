@@ -9,9 +9,9 @@ def expand(grammar, axiom, times=1):
     grammar rules
     """
     for n in xrange(times):
-        axiom = ''.join( grammar[c] if c in grammar else c for c in axiom )
+        axiom = sum( (list(grammar[c]) if c in grammar else [c] for c in axiom), [] )
 
-    return axiom
+    return ''.join(axiom)
 
 if __name__ == "__main__":
 

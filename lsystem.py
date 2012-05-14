@@ -1,13 +1,14 @@
 #! /usr/bin/env python
 # coding: utf-8
 
+__all__ = ['expand']
 
-def expand(grammar, axiom, times):
+def expand(grammar, axiom, times=1):
     """
     Get the l_string of the expanded axiom string N times for the given
     grammar rules
     """
-    pass
+    return axiom
 
 if __name__ == "__main__":
 

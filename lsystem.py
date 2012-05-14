@@ -5,19 +5,22 @@ __all__ = ['expand']
 
 import re
 
-def expand(grammar, axiom, times=1):
+def expand(grammar, axiom, times=0):
     """
     Get the l_string of the expanded axiom string N times for the given
     grammar rules
     """
-    l_string = []
-    for char in axiom:
-        if char in grammar:
-            l_string.append( grammar[char])
-        else:
-            l_string.append( char )
+    for n in xrange(times):
+        l_string = []
+        for char in axiom:
+            if char in grammar:
+                l_string.append( grammar[char])
+            else:
+                l_string.append( char )
 
-    return ''.join( l_string )
+        axiom = ''.join( l_string )
+
+    return axiom
 
 if __name__ == "__main__":
 

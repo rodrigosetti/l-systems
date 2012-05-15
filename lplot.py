@@ -19,8 +19,11 @@ def commands(l_string, length, delta_theta):
     for c in l_string:
 
         if c in '[]':
-            state = c
-            amount = 1
+            if how_much != 0:
+                yield (last_state, how_much)
+            how_much = 0
+            yield (c, None)
+            continue
         elif c == 'f':
             state = MOVE
             amount = length
@@ -30,6 +33,8 @@ def commands(l_string, length, delta_theta):
         elif c in '><':
             state = TURN_Z
             amount = delta_theta if c == '>' else -delta_theta
+        else:
+            continue
 
         if last_state != state:
             if how_much != 0:

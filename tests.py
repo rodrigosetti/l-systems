@@ -2,6 +2,8 @@
 # coding: utf-8
 
 from lsystem import expand
+from lplot import lines_2d, lines_3d
+
 import unittest
 
 class TestLSystemExpand(unittest.TestCase):
@@ -43,6 +45,16 @@ class TestLSystemExpand(unittest.TestCase):
         times = 0
 
         self.assertEquals(axiom, expand(grammar, axiom, times))
+
+class TestLines2D(unittest.TestCase):
+
+    def test_single_f_should_return_a_single_line_with_length(self):
+
+        l_string = 'f'
+        length = 100
+        expected = set( (0,100) )
+
+        self.assertEquals( expected, lines_2d(l_string, length, 0, True) )
 
 if __name__ == "__main__":
     unittest.main()

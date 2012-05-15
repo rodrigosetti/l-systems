@@ -33,3 +33,10 @@ on robustness, being fast and several output options. Other tools could
 be built and used to aid users edit L-Systems rules. This one, just take
 them as input.
 
+The project consists of two tools: the `lsystem.py`, which expands a
+grammar rule and creates a full string. And the `lplot.py` which takes
+the string and plots. Usually one can pipe the output from the first
+tool to the second to go from grammar and axiom to the actual plot.
+
+Please see the scripts in examples directory for usage.
+

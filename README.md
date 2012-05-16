@@ -68,4 +68,5 @@ TODO
 ----
 
   * Support context sensitive grammars
+  * Support stochastic grammars
 

@@ -1,7 +1,7 @@
 {
     "axiom": "X",
     "applies": 6,
-    "angle": 25,
+    "angle": 45,
     "length": 10,
     "rules" : {
         "X": "f[+X][-X]X",

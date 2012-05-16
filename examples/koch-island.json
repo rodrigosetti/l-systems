@@ -2,7 +2,7 @@
     "axiom": "f+f+f+f",
     "applies": 4,
     "angle": -90,
-    "length": 10,
+    "length": 5,
     "rules" : {
         "f": "f+f-f-ff+f+f-f"
     }

@@ -79,6 +79,6 @@ There are some in the "examples" folder. Please fell free to contribute with
 different and interesting stuff. Some examples images are available at this
 Facebook album:
 
-    https://www.facebook.com/media/set/?set=a.2728929001312.92726.1799841053&type=3&l=5aa0db10ff
+https://www.facebook.com/media/set/?set=a.2728929001312.92726.1799841053&type=3&l=5aa0db10ff
 
 

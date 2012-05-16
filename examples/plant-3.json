@@ -1,0 +1,10 @@
+
+{
+    "applies" : 4,
+    "angle": 25,
+    "axiom" : "f",
+    "length": 10,
+    "rules" : {
+        "f": "fff[+f+f+f][-f+f+f+f+f]"
+    }
+}

@@ -1,0 +1,9 @@
+{
+    "axiom": "f",
+    "applies": 5,
+    "angle": 25,
+    "length": 10,
+    "rules" : {
+        "f": "f[-f]f[+f][f]"
+    }
+}

@@ -1,12 +1,10 @@
-
 {
     "axiom": "X",
     "applies": 6,
     "angle": 25,
     "length": 10,
     "rules" : {
-        "X": "f-[[X]+X]+f[+fX]-X",
+        "X": "f[+X][-X]X",
         "f": "ff"
     }
 }
-

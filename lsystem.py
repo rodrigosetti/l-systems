@@ -1,7 +1,11 @@
 #! /usr/bin/env python
 # coding: utf-8
 
-__all__ = ['expand']
+from __future__ import division
+import transformation
+import numpy
+
+TERMINALS = 'f+-><[]'
 
 def expand(grammar, axiom, times=1):
     """
@@ -11,36 +15,112 @@ def expand(grammar, axiom, times=1):
     for n in xrange(times):
         axiom = sum( (list(grammar[c]) if c in grammar else [c] for c in axiom), [] )
 
-    return ''.join(axiom)
+    return (c for c in axiom if c in TERMINALS)
+
+# states/commands
+MOVE = 'f'
+TURN_Y = 'y'
+TURN_Z = 'z'
+
+def commands(l_string, length, delta_theta):
+    "Group commands from l_string"
+
+    last_state = state = None
+    how_much = amount = 0
+
+    for c in l_string:
+
+        if c in '[]':
+            if how_much != 0:
+                yield (last_state, how_much)
+            how_much = 0
+            yield (c, None)
+            continue
+        elif c == 'f':
+            state = MOVE
+            amount = length
+        elif c in '+-':
+            state = TURN_Y
+            amount = delta_theta if c == '+' else -delta_theta
+        elif c in '><':
+            state = TURN_Z
+            amount = delta_theta if c == '>' else -delta_theta
+        else:
+            continue
+
+        if last_state != state:
+            if how_much != 0:
+                yield (last_state, how_much)
+            how_much = amount
+        else:
+            how_much += amount
+
+        last_state = state
+
+    # last state
+    if how_much != 0:
+        yield (last_state, how_much)
+
+def paths(l_string, length, delta_theta, origin=(0,0,0,1)):
+    """
+    Yield a sequence of paths of 3D points for a plot of a given l_string
+    """
+    matrix = transformation.identity_matrix()
+    state_stack = []
+    path = [origin]
+
+    for c, amount in commands(l_string, length, delta_theta):
+        if c == '[':
+            state_stack.append( (matrix, path) )
+            path = [ numpy.dot(matrix, origin) ]
+        elif c == ']':
+            yield path
+            matrix, path = state_stack.pop()
+        elif c == MOVE:
+            matrix = numpy.dot(matrix, transformation.translation_matrix( (0, -amount, 0) ))
+            path.append( numpy.dot(matrix, origin) )
+        elif c == TURN_Y:
+            matrix = numpy.dot(matrix, transformation.rotation_matrix(amount, (0,0,1)))
+        elif c == TURN_Z:
+            matrix = numpy.dot(matrix, transformation.rotation_matrix(amount, (0,1,0)))
+
+    # yields last path
+    yield path
 
 if __name__ == "__main__":
 
-    # Input: L-System grammar, axiom and apply times
-    # Ouput: Generated L-String (stdout)
-
-    import sys
-    from optparse import OptionParser
-
-    # Read grammar rules and application times from command line parameters
-    parser = OptionParser()
-    parser.add_option("-r", "--rule", dest="rules", action="append",
-                       help="Adds a grammar rule in the for .:.*", metavar="RULE")
-    parser.add_option("-t", "--times", dest="times", action="store", default=1, type="int",
-                       help="The number of times the grammar will be applied", metavar="TIMES")
-
-    (options, args) = parser.parse_args()
+    import sys, json
+    from math import radians
+    from PIL import Image, ImageDraw
 
     # if there is one argument and it's not "-"
-    if args and args[0] != '-':
+    if len(sys.argv) > 1 and sys.argv[1] != '-':
         # read contents from file
-        axiom = open(args[0]).read()
+        config = json.load(open( sys.argv[1] ))
+        filename = sys.argv[1].split('.')[0] + '.png'
     else:
         # read contents from stdin
-        axiom = sys.stdin.read()
+        filename = 'out.png'
+        config = json.load(sys.stdin)
 
-    # create grammar
-    grammar = dict( rule.split(':') for rule in options.rules)
+    # expand string
+    l_string = expand( config['rules'], config['axiom'], config['applies'])
 
-    # print produced l-string:
-    print expand( grammar, axiom, int(options.times))
+    # get coordinates
+    paths = tuple(paths( l_string, float(config['length']), radians(float(config['angle']))))
+
+    # define size
+    min_x = min( min(point[0] for point in path) for path in paths)
+    max_x = max( max(point[0] for point in path) for path in paths)
+    min_y = min( min(point[1] for point in path) for path in paths)
+    max_y = max( max(point[1] for point in path) for path in paths)
+
+    # create new image
+    image = Image.new( 'RGB', (int(max_x-min_x), int(max_y-min_y)))
+    draw = ImageDraw.Draw(image)
+
+    for path in paths:
+        draw.line( [(p[0]-min_x, p[1]-min_y) for p in path], (255,255,255) )
+
+    image.save( config['filename'] if 'filename' in config else filename, "PNG" )
 

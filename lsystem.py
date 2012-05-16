@@ -25,41 +25,38 @@ TURN_Z = 'z'
 def commands(l_string, length, delta_theta):
     "Group commands from l_string"
 
-    last_state = state = None
-    how_much = amount = 0
+    commands = []
 
     for c in l_string:
 
         if c in '[]':
-            if how_much != 0:
-                yield (last_state, how_much)
-            how_much = 0
-            yield (c, None)
-            continue
+            command, amount = c, None
         elif c == 'f':
-            state = MOVE
-            amount = length
+            command, amount = MOVE, length
         elif c in '+-':
-            state = TURN_Y
+            command = TURN_Y
             amount = delta_theta if c == '+' else -delta_theta
         elif c in '><':
-            state = TURN_Z
+            command = TURN_Z
             amount = delta_theta if c == '>' else -delta_theta
         else:
+            # not command character
             continue
 
-        if last_state != state:
-            if how_much != 0:
-                yield (last_state, how_much)
-            how_much = amount
-        else:
-            how_much += amount
+        if commands:
+            if command not in '[]' and commands[-1][0] == command:
+                # agregate
+                commands[-1] = (commands[-1][0], commands[-1][1] + amount)
 
-        last_state = state
+                # if aggregation yielded a zero command, then drop it
+                if commands[-1][1] == 0:
+                    commands.pop()
 
-    # last state
-    if how_much != 0:
-        yield (last_state, how_much)
+                continue
+
+        commands.append( (command, amount) )
+
+    return commands
 
 def paths(l_string, length, delta_theta, origin=(0,0,0,1)):
     """

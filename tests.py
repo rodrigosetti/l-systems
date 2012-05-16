@@ -97,6 +97,15 @@ class TestCommands(unittest.TestCase):
 
         self.assertEquals( expected, list(commands(l_string, length, delta_theta)) )
 
+    def test_commands_should_drop_zero_and_collapse_before_and_after(self):
+
+        l_string = 'f<>f'
+        length = 10
+        delta_theta = 25
+        expected = [(MOVE, 20)]
+
+        self.assertEquals( expected, list(commands(l_string, length, delta_theta)) )
+
 
 
 if __name__ == "__main__":

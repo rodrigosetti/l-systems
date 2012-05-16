@@ -58,7 +58,7 @@ These are the supported configuration keys:
 
 These are the supported commands:
 
-  * `f`: move forward.
+  * `f` or `g`: move forward.
   * `+`: turn `angle` right.
   * `-`: turn `angle` left.
   * `[`: Start branch.
@@ -69,4 +69,6 @@ TODO
 
   * Support context sensitive grammars
   * Support stochastic grammars
+  * Initial angle heading
+  * Image margins, colors and thickness configuration
 

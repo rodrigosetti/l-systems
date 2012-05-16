@@ -18,8 +18,8 @@ developed in 1968 by the Hungarian theoretical biologist and botanist
 from the University of Utrecht, Aristid Lindenmayer. (from Wikipedia:
 http://en.wikipedia.org/wiki/L-system)
 
-What is this Project?
----------------------
+Implementation
+--------------
 
 This is a simple implementation of the L-System. The goal is to produce
 both 2D and 3D images with several configuration settings (_i. e._
@@ -33,10 +33,34 @@ on robustness, being fast and several output options. Other tools could
 be built and used to aid users edit L-Systems rules. This one, just take
 them as input.
 
-The project consists of two tools: the `lsystem.py`, which expands a
-grammar rule and creates a full string. And the `lplot.py` which takes
-the string and plots. Usually one can pipe the output from the first
-tool to the second to go from grammar and axiom to the actual plot.
+The program `lsystem.py` accepts a file as command line parameter
+or it reads from `stdin`. The contents of the input is a JSON with
+configurations for the L-System parameters as an object, _e.g._:
 
-Please see the scripts in examples directory for usage.
+    {
+        "axiom": "X",
+        "applies": 6,
+        "angle": 25,
+        "length": 10,
+        "rules" : {
+            "X": "f-[[X]+X]+f[+fX]-X",
+            "f": "ff"
+        }
+    }
+
+These are the supported configuration keys:
+
+  * "axiom": The starting string of the L-System.
+  * "applies": The number of times the rules are applied to the string.
+  * "angle": The angle to apply for the turning commands. In degrees.
+  * "length": The length of each `f` command. In pixels.
+  * "rules": A dictionary of character and substitution strings.
+
+These are the supported commands:
+
+  * `f`: move forward.
+  * `+`: turn `angle` right.
+  * `-`: turn `angle` left.
+  * `[`: Start branch.
+  * `]`: End branch (and restore orientation when branch was started)
 

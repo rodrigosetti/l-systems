@@ -5,7 +5,7 @@ from __future__ import division
 import transformation
 import numpy
 
-TERMINALS = 'f+-><[]'
+TERMINALS = 'fg+-><[]'
 
 def expand(grammar, axiom, times=1):
     """
@@ -31,7 +31,7 @@ def commands(l_string, length, delta_theta):
 
         if c in '[]':
             command, amount = c, None
-        elif c == 'f':
+        elif c in 'fg':
             command, amount = MOVE, length
         elif c in '+-':
             command = TURN_Y

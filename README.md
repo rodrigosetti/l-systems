@@ -64,3 +64,8 @@ These are the supported commands:
   * `[`: Start branch.
   * `]`: End branch (and restore orientation when branch was started)
 
+TODO
+----
+
+  * Support context sensitive grammars
+

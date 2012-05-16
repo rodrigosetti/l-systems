@@ -2,8 +2,12 @@
 # coding: utf-8
 
 from __future__ import division
-import transformation
+
+from PIL import Image, ImageDraw
+from math import radians
+import json
 import numpy
+import transformation
 
 TERMINALS = 'fg+-><[]'
 
@@ -58,7 +62,7 @@ def commands(l_string, length, delta_theta):
 
     return commands
 
-def paths(l_string, length, delta_theta, origin=(0,0,0,1)):
+def get_paths(l_string, length, delta_theta, origin=(0,0,0,1)):
     """
     Yield a sequence of paths of 3D points for a plot of a given l_string
     """
@@ -84,27 +88,18 @@ def paths(l_string, length, delta_theta, origin=(0,0,0,1)):
     # yields last path
     yield path
 
-if __name__ == "__main__":
-
-    import sys, json
-    from math import radians
-    from PIL import Image, ImageDraw
-
-    # if there is one argument and it's not "-"
-    if len(sys.argv) > 1 and sys.argv[1] != '-':
-        # read contents from file
-        config = json.load(open( sys.argv[1] ))
-        filename = sys.argv[1].split('.')[0] + '.png'
-    else:
-        # read contents from stdin
-        filename = 'out.png'
-        config = json.load(sys.stdin)
+def process_file(file_obj, default_out_filename='out.png'):
+    """
+    Reads from the file object, process the configuration, plots the L-system
+    and saves to the default_out_filename if there is not a filename config
+    """
+    config = json.load( file_obj )
 
     # expand string
     l_string = expand( config['rules'], config['axiom'], config['applies'])
 
     # get coordinates
-    paths = tuple(paths( l_string, float(config['length']), radians(float(config['angle']))))
+    paths = tuple(get_paths( l_string, float(config['length']), radians(float(config['angle']))))
 
     # define size
     min_x = min( min(point[0] for point in path) for path in paths)
@@ -119,5 +114,19 @@ if __name__ == "__main__":
     for path in paths:
         draw.line( [(p[0]-min_x, p[1]-min_y) for p in path], (255,255,255) )
 
-    image.save( config['filename'] if 'filename' in config else filename, "PNG" )
+    image.save( config['filename'] if 'filename' in config else default_out_filename, "PNG" )
+
+if __name__ == "__main__":
+
+    import sys
+
+    # if there is one argument and it's not "-"
+    if len(sys.argv) > 1 and sys.argv[1] != '-':
+        # process each filename in input
+        for filename in sys.argv[1:]:
+            with open(filename) as f:
+                process_file( f, filename.split('.')[0] + '.png')
+    else:
+        # read contents from stdin
+        process_file( sys.stdin )
 

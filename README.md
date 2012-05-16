@@ -33,9 +33,9 @@ on robustness, being fast and several output options. Other tools could
 be built and used to aid users edit L-Systems rules. This one, just take
 them as input.
 
-The program `lsystem.py` accepts a file as command line parameter
-or it reads from `stdin`. The contents of the input is a JSON with
-configurations for the L-System parameters as an object, _e.g._:
+The program `lsystem.py` accepts one or more filenames as command line
+arguments or it reads from `stdin`. The contents of the file is a JSON
+with configurations for the L-System parameters as an object, _e.g._:
 
     {
         "axiom": "X",

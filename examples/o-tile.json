@@ -1,0 +1,11 @@
+{
+    "axiom": "X+X+X+X+X+X+X+X+X+X+X+X+X+X+X+X+X+X+X+X+X+X+X+X+",
+    "applies": 5,
+    "angle": -15,
+    "length": 10,
+    "rules" : {
+        "X" : "[f+f+f+f[---X-Y]+++++f++++++++f-f-f-f]",
+        "Y" : "[f+f+f+f[---Y]+++++f++++++++f-f-f-f]"
+    }
+}
+

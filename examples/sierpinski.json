@@ -1,0 +1,11 @@
+{
+    "axiom": "f",
+    "applies": 8,
+    "angle": 60,
+    "length": 5,
+    "rules" : {
+        "f": "g-f-g",
+        "g": "f+g+f"
+    }
+}
+

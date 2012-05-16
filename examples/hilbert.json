@@ -1,0 +1,11 @@
+{
+    "axiom": "X",
+    "applies": 7,
+    "angle": -90,
+    "length": 5,
+    "rules" : {
+        "X": "-Yf+XfX+fY-",
+        "Y": "+Xf-YfY-fX+"
+    }
+}
+

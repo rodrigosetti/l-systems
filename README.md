@@ -75,10 +75,24 @@ TODO
 Examples
 --------
 
-There are some in the "examples" folder. Please fell free to contribute with
-different and interesting stuff. Some examples images are available at this
-Facebook album:
+The formulas for these examples are in the `examples` folder.
 
-https://www.facebook.com/media/set/?set=a.2728929001312.92726.1799841053&type=3&l=5aa0db10ff
+Three examples from Lindenmayer _et. al._ book [The Algorithmic Beauty of
+Plants](http://en.wikipedia.org/wiki/The_Algorithmic_Beauty_of_Plants):
 
+![Plant 1](images/plant-1.png?raw=true)
+![Plant 2](images/plant-2.png?raw=true)
+![Plant 3](images/plant-3.png?raw=true)
+
+The [Koch Snowflake](http://en.wikipedia.org/wiki/Koch_snowflake):
+
+![Koch Snowflake](images/koch-snowflake.png?raw=true)
+
+The [Sierpinski triangle](http://en.wikipedia.org/wiki/Sierpinski_triangle):
+
+![Sierpinski Triangle](images/sierpinski.png?raw=true)
+
+The [Hilbert Curve](http://en.wikipedia.org/wiki/Hilbert_curve):
+
+![Hilbert Curve](images/hilbert.png?raw=true)
 

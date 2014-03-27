@@ -37,16 +37,18 @@ The program `lsystem.py` accepts one or more filenames as command line
 arguments or it reads from `stdin`. The contents of the file is a JSON
 with configurations for the L-System parameters as an object, _e.g._:
 
-    {
-        "axiom": "X",
-        "applies": 6,
-        "angle": 25,
-        "length": 10,
-        "rules" : {
-            "X": "f-[[X]+X]+f[+fX]-X",
-            "f": "ff"
-        }
+```json
+{
+    "axiom": "X",
+    "applies": 6,
+    "angle": 25,
+    "length": 10,
+    "rules" : {
+        "X": "f-[[X]+X]+f[+fX]-X",
+        "f": "ff"
     }
+}
+```
 
 These are the supported configuration keys:
 
